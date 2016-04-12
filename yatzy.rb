@@ -21,37 +21,30 @@ class Yatzy
   end
 
   def self.ones(*dice)
-    number = 1
-    return 0 unless dice.include?(number)
-    dice.select { |die| die == number }.reduce(&:+)
+    singles(1, *dice)
   end
 
   def self.twos(*dice)
-    number = 2
-    return 0 unless dice.include?(number)
-    dice.select { |die| die == number }.reduce(&:+)
+    singles(2, *dice)
   end
 
   def self.threes(*dice)
-    number = 3
-    return 0 unless dice.include?(number)
-    dice.select { |die| die == number }.reduce(&:+)
+    singles(3, *dice)
   end
 
   def self.fours(*dice)
-    number = 4
-    return 0 unless dice.include?(number)
-    dice.select { |die| die == number }.reduce(&:+)
+    singles(4, *dice)
   end
 
   def self.fives(*dice)
-    number = 5
-    return 0 unless dice.include?(number)
-    dice.select { |die| die == number }.reduce(&:+)
+    singles(5, *dice)
   end
 
   def self.sixes(*dice)
-    number = 6
+    singles(6, *dice)
+  end
+
+  def self.singles(number, *dice)
     return 0 unless dice.include?(number)
     dice.select { |die| die == number }.reduce(&:+)
   end
