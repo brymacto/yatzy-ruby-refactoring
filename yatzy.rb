@@ -44,25 +44,16 @@ class Yatzy
     dice.select { |die| die == number }.reduce(&:+)
   end
 
-  def fives()
-    s = 0
-    i = 0
-    for i in (Range.new(0, @dice.size))
-      if (@dice[i] == 5)
-        s = s + 5
-      end
-    end
-    s
+  def self.fives(*dice)
+    number = 5
+    return 0 unless dice.include?(number)
+    dice.select { |die| die == number }.reduce(&:+)
   end
 
-  def sixes
-    sum = 0
-    for at in 0..@dice.length
-      if (@dice[at] == 6)
-        sum = sum + 6
-      end
-    end
-    return sum
+  def self.sixes(*dice)
+    number = 6
+    return 0 unless dice.include?(number)
+    dice.select { |die| die == number }.reduce(&:+)
   end
 
   def self.score_pair( d1,  d2,  d3,  d4,  d5)

@@ -52,16 +52,16 @@ RSpec.describe "Yatzy" do
     end
   end
 
-  it "test_fives()" do
-    expect(10).to eq(Yatzy.new(4, 4, 4, 5, 5).fives())
-    expect(15).to eq(Yatzy.new(4, 4, 5, 5, 5).fives())
-    expect(20).to eq(Yatzy.new(4, 5, 5, 5, 5).fives())
+  describe "#fives" do
+    it "scores the sum of all the fives" do
+      expect(Yatzy.fives(4, 4, 5, 5, 5)).to eq(15)
+    end
   end
 
-  it "test_sixes_test" do
-    expect(0).to eq(Yatzy.new(4, 4, 4, 5, 5).sixes())
-    expect(6).to eq(Yatzy.new(4, 4, 6, 5, 5).sixes())
-    expect(18).to eq(Yatzy.new(6, 5, 6, 6, 5).sixes())
+  describe "#sixes" do
+    it "scores the sum of all the sixes" do
+      expect(Yatzy.sixes(6, 5, 6, 6, 5)).to eq(18)
+    end
   end
 
   it "test_one_pair" do
