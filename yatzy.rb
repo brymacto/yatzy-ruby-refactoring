@@ -26,6 +26,19 @@ class Yatzy
     dice.select { |die| die == number }.reduce(&:+)
   end
 
+  def self.score_pair_2(dice: )
+    # TODO: finish refactoring and replace #score_pair with this method
+    unique_values = dice.uniq
+
+    value_count_pairs = []
+    unique_values.each do |value|
+      value_count_pairs << { value => dice.count(value) }
+    end
+    p "******"
+    p value_count_pairs.filter
+    p "******"
+  end
+
   def self.score_pair( d1,  d2,  d3,  d4,  d5)
     counts = [0]*6
     counts[d1-1] += 1
