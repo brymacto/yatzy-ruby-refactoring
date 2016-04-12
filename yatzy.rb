@@ -38,14 +38,10 @@ class Yatzy
     dice.select { |die| die == number }.reduce(&:+)
   end
 
-  def fours
-    sum = 0
-    for at in Array 0..4
-      if (@dice[at] == 4)
-        sum += 4
-      end
-    end
-    return sum
+  def self.fours(*dice)
+    number = 4
+    return 0 unless dice.include?(number)
+    dice.select { |die| die == number }.reduce(&:+)
   end
 
   def fives()

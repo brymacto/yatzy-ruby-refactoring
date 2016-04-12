@@ -46,10 +46,10 @@ RSpec.describe "Yatzy" do
     end
   end
 
-  it "test_fours_test" do
-    expect(12).to eq(Yatzy.new(4, 4, 4, 5, 5).fours)
-    expect(8).to eq(Yatzy.new(4, 4, 5, 5, 5).fours)
-    expect(4).to eq(Yatzy.new(4, 5, 5, 5, 5).fours)
+  describe "#fours" do
+    it "scores the sum of all the fours" do
+      expect(Yatzy.fours(4, 4, 5, 5, 5)).to eq(8)
+    end
   end
 
   it "test_fives()" do
