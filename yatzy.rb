@@ -1,4 +1,13 @@
 class Yatzy
+  def initialize(d1, d2, d3, d4, _5)
+    @dice = [0]*5
+    @dice[0] = d1
+    @dice[1] = d2
+    @dice[2] = d3
+    @dice[3] = d4
+    @dice[4] = _5
+  end
+
   def self.chance(*dice)
     dice.reduce(&:+)
   end
@@ -12,57 +21,21 @@ class Yatzy
   end
 
   def self.ones(*dice)
-    return 0 unless dice.include?(1)
-    dice.select { |die| die == 1 }.reduce(&:+)
+    number = 1
+    return 0 unless dice.include?(number)
+    dice.select { |die| die == number }.reduce(&:+)
   end
 
-  def self.twos( d1,  d2,  d3,  d4,  d5)
-    sum = 0
-    if (d1 == 2)
-      sum += 2
-    end
-    if (d2 == 2)
-      sum += 2
-    end
-    if (d3 == 2)
-      sum += 2
-    end
-    if (d4 == 2)
-      sum += 2
-    end
-    if (d5 == 2)
-      sum += 2
-    end
-    return sum
+  def self.twos(*dice)
+    number = 2
+    return 0 unless dice.include?(number)
+    dice.select { |die| die == number }.reduce(&:+)
   end
 
-  def self.threes( d1,  d2,  d3,  d4,  d5)
-    s = 0
-    if (d1 == 3)
-      s += 3
-    end
-    if (d2 == 3)
-      s += 3
-    end
-    if (d3 == 3)
-      s += 3
-    end
-    if (d4 == 3)
-      s += 3
-    end
-    if (d5 == 3)
-      s += 3
-    end
-    return s
-  end
-
-  def initialize(d1, d2, d3, d4, _5)
-    @dice = [0]*5
-    @dice[0] = d1
-    @dice[1] = d2
-    @dice[2] = d3
-    @dice[3] = d4
-    @dice[4] = _5
+  def self.threes(*dice)
+    number = 3
+    return 0 unless dice.include?(number)
+    dice.select { |die| die == number }.reduce(&:+)
   end
 
   def fours
