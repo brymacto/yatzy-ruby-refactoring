@@ -11,25 +11,9 @@ class Yatzy
     end
   end
 
-  def self.ones( d1,  d2,  d3,  d4,  d5)
-    sum = 0
-    if (d1 == 1)
-      sum += 1
-    end
-    if (d2 == 1)
-      sum += 1
-    end
-    if (d3 == 1)
-      sum += 1
-    end
-    if (d4 == 1)
-      sum += 1
-    end
-    if (d5 == 1)
-      sum += 1
-    end
-
-    sum
+  def self.ones(*dice)
+    return 0 unless dice.include?(1)
+    dice.select { |die| die == 1 }.reduce(&:+)
   end
 
   def self.twos( d1,  d2,  d3,  d4,  d5)
