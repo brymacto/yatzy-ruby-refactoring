@@ -6,16 +6,22 @@ RSpec.describe "Yatzy" do
     it "returns the sum of all dice provided" do
       result = Yatzy.chance(2,3,1,2,2)
 
-      expect(10).to eq(result)
+      expect(result).to eq(10)
     end
   end
 
-  it "test_yatzy_scores_50" do
-    expected = 50
-    actual = Yatzy.yatzy([4,4,4,4,4])
-    expect(expected).to eq(actual)
-    expect(50).to eq(Yatzy.yatzy([6,6,6,6,6]))
-    expect(0).to eq(Yatzy.yatzy([6,6,6,6,3]))
+  describe "#yatzy" do
+    it "scores 50 when all dice are matching" do
+      result = Yatzy.yatzy([4,4,4,4,4])
+
+      expect(result).to eq(50)
+    end
+
+    it "scores 0 when all dice are not matching" do
+      result = Yatzy.yatzy([6,6,6,6,3])
+
+      expect(result).to eq(0)
+    end
   end
 
   it "test_1s" do
