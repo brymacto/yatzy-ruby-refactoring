@@ -24,43 +24,21 @@ RSpec.describe "Yatzy" do
     end
   end
 
-  describe "#ones" do
-    it "scores the sum of all the ones" do
-      expect(Yatzy.ones(1, 2, 1, 1, 1)).to eq(4)
+  describe "#singles" do
+    it "scores the sum of all the number provided" do
+      expect(Yatzy.singles(number: 3, dice: [1, 3, 3, 1, 1])).to eq(6)
     end
 
-    it "scores 0 for no 1's" do
-      expect(Yatzy.ones(6, 2, 2, 4, 5)).to eq(0)
+    it "scores zero when no dice match the number provided" do
+      expect(Yatzy.singles(number: 3, dice: [1, 2, 1, 1, 1])).to eq(0)
     end
-  end
 
-  describe "#twos" do
-    it "scores the sum of all the twos" do
-      expect(Yatzy.twos(1, 2, 3, 2, 6)).to eq(4)
+    it "does not accept numbers over 6" do
+      expect { Yatzy.singles(number: 7, dice: [1, 2, 1, 1, 1]) }.to raise_error("you can only use 6-sided dice (number must be between 1 and 6)")
     end
-  end
 
-  describe "#threes" do
-    it "scores the sum of all the threes" do
-      expect(Yatzy.threes(2, 3, 3, 3, 3)).to eq(12)
-    end
-  end
-
-  describe "#fours" do
-    it "scores the sum of all the fours" do
-      expect(Yatzy.fours(4, 4, 5, 5, 5)).to eq(8)
-    end
-  end
-
-  describe "#fives" do
-    it "scores the sum of all the fives" do
-      expect(Yatzy.fives(4, 4, 5, 5, 5)).to eq(15)
-    end
-  end
-
-  describe "#sixes" do
-    it "scores the sum of all the sixes" do
-      expect(Yatzy.sixes(6, 5, 6, 6, 5)).to eq(18)
+    it "does not accept numbers below 1" do
+      expect { Yatzy.singles(number: 0, dice: [1, 2, 1, 1, 1]) }.to raise_error("you can only use 6-sided dice (number must be between 1 and 6)")
     end
   end
 

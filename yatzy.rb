@@ -20,31 +20,8 @@ class Yatzy
     end
   end
 
-  def self.ones(*dice)
-    singles(1, *dice)
-  end
-
-  def self.twos(*dice)
-    singles(2, *dice)
-  end
-
-  def self.threes(*dice)
-    singles(3, *dice)
-  end
-
-  def self.fours(*dice)
-    singles(4, *dice)
-  end
-
-  def self.fives(*dice)
-    singles(5, *dice)
-  end
-
-  def self.sixes(*dice)
-    singles(6, *dice)
-  end
-
-  def self.singles(number, *dice)
+  def self.singles(number: , dice: )
+    raise "you can only use 6-sided dice (number must be between 1 and 6)" if (number < 1) || (number > 6)
     return 0 unless dice.include?(number)
     dice.select { |die| die == number }.reduce(&:+)
   end
