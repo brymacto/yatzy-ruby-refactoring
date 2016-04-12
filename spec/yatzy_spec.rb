@@ -1,12 +1,13 @@
-require 'spec_helper'
-require_relative '../yatzy'
+require "spec_helper"
+require_relative "../yatzy"
 
-RSpec.describe 'Yatzy' do
-  it "test_chance_scores_sum_of_all_dice" do
-    expected = 15
-    actual = Yatzy.chance(2,3,4,5,1)
-    expect(expected).to eq(actual)
-    expect(16).to eq(Yatzy.chance(3,3,4,5,1))
+RSpec.describe "Yatzy" do
+  describe "#chance" do
+    it "returns the sum of all dice provided" do
+      result = Yatzy.chance(2,3,1,2,2)
+
+      expect(10).to eq(result)
+    end
   end
 
   it "test_yatzy_scores_50" do
