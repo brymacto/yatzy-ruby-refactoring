@@ -1,7 +1,7 @@
 require "spec_helper"
 require_relative "../yatzy"
 
-RSpec.describe "Yatzy" do
+RSpec.describe Yatzy do
   describe "#chance" do
     it "returns the sum of all dice provided" do
       result = Yatzy.chance(2, 3, 1, 2, 2)

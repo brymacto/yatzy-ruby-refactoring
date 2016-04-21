@@ -30,13 +30,11 @@ class Yatzy
     # TODO: finish refactoring and replace #score_pair with this method
     unique_values = dice.uniq
 
-    value_count_pairs = []
+    value_count_pairs = {}
     unique_values.each do |value|
-      value_count_pairs << { value => dice.count(value) }
+      value_count_pairs[value] = dice.count(value)
     end
-    p "******"
-    p value_count_pairs.filter
-    p "******"
+    value_count_pairs
   end
 
   def self.score_pair( d1,  d2,  d3,  d4,  d5)
