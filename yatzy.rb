@@ -27,14 +27,22 @@ class Yatzy
   end
 
   def self.score_pair(dice: )
-    unique_values = dice.uniq
+    value_count_pairs = build_value_count_pairs(dice)
+    filter_single_dice(value_count_pairs).keys.max * 2
+  end
+
+  def self.build_value_count_pairs(dice)
+    unique_dice = dice.uniq
 
     value_count_pairs = {}
-    unique_values.each do |value|
-      value_count_pairs[value] = dice.count(value)
+    unique_dice.each do |dice_face_value|
+      value_count_pairs.store(dice_face_value, dice.count(dice_face_value))
     end
+    value_count_pairs
+  end
 
-    value_count_pairs.reject { |_k, value| value == 1 }.keys.max * 2
+  def self.filter_single_dice(value_count_pairs)
+    value_count_pairs.reject { |_k, value| value == 1 }
   end
 
   def self.two_pair( d1,  d2,  d3,  d4,  d5)
