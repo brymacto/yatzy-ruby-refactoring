@@ -26,31 +26,15 @@ class Yatzy
     dice.select { |die| die == number }.reduce(&:+)
   end
 
-  def self.score_pair_2(dice: )
-    # TODO: finish refactoring and replace #score_pair with this method
+  def self.score_pair(dice: )
     unique_values = dice.uniq
 
     value_count_pairs = {}
     unique_values.each do |value|
       value_count_pairs[value] = dice.count(value)
     end
-    value_count_pairs
-  end
 
-  def self.score_pair( d1,  d2,  d3,  d4,  d5)
-    counts = [0]*6
-    counts[d1-1] += 1
-    counts[d2-1] += 1
-    counts[d3-1] += 1
-    counts[d4-1] += 1
-    counts[d5-1] += 1
-    at = 0
-    (0...6).each do |at|
-      if (counts[6-at-1] >= 2)
-        return (6-at)*2
-      end
-    end
-    return 0
+    value_count_pairs.reject { |_k, value| value == 1 }.keys.max * 2
   end
 
   def self.two_pair( d1,  d2,  d3,  d4,  d5)
