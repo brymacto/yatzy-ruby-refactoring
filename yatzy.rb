@@ -45,25 +45,12 @@ class Yatzy
     value_count_pairs.reject { |_k, value| value == 1 }
   end
 
-  def self.two_pair( d1,  d2,  d3,  d4,  d5)
-    counts = [0]*6
-    counts[d1-1] += 1
-    counts[d2-1] += 1
-    counts[d3-1] += 1
-    counts[d4-1] += 1
-    counts[d5-1] += 1
-    n = 0
-    score = 0
-    for i in Array 0..5
-      if (counts[6-i-1] >= 2)
-        n = n+1
-        score += (6-i)
-      end
-    end
-    if (n == 2)
-      return score * 2
+  def self.two_pair( dice: )
+    value_count_pairs = build_value_count_pairs(dice)
+    if filter_single_dice(value_count_pairs).keys.size == 2
+      filter_single_dice(value_count_pairs).keys.reduce(&:+) * 2
     else
-      return 0
+      0
     end
   end
 

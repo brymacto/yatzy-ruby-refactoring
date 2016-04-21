@@ -49,8 +49,10 @@ RSpec.describe Yatzy do
   end
 
   it "test_two_Pair" do
-    expect(16).to eq(Yatzy.two_pair(3, 3, 5, 4, 5))
-    expect(16).to eq(Yatzy.two_pair(3, 3, 5, 5, 5))
+    expect(Yatzy.two_pair(dice: [3, 3, 5, 4, 5])).to eq(16)
+    expect(Yatzy.two_pair(dice: [3, 3, 5, 5, 5])).to eq(16)
+    expect(Yatzy.two_pair(dice: [1, 1, 2, 2, 5])).to eq(6)
+    expect(Yatzy.two_pair(dice: [1, 1, 3, 4, 5])).to eq(0)
   end
 
   it "test_three_of_a_kind()" do
