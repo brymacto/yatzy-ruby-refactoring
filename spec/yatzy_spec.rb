@@ -65,9 +65,11 @@ RSpec.describe Yatzy do
   end
 
   it "test_four_of_a_knd" do
-    expect(12).to eq(Yatzy.four_of_a_kind(3, 3, 3, 3, 5))
-    expect(20).to eq(Yatzy.four_of_a_kind(5, 5, 5, 4, 5))
-    expect(12).to eq(Yatzy.four_of_a_kind(3, 3, 3, 3, 3))
+    aggregate_failures do
+      expect(Yatzy.four_of_a_kind(dice: [3, 3, 3, 3, 5])).to eq(12)
+      expect(Yatzy.four_of_a_kind(dice: [5, 5, 5, 4, 5])).to eq(20)
+      expect(Yatzy.four_of_a_kind(dice: [3, 3, 3, 3, 3])).to eq(12)
+    end
   end
 
   it "test_smallStraight()" do

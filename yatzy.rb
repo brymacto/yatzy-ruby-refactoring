@@ -63,19 +63,16 @@ class Yatzy
     end
   end
 
-  def self.four_of_a_kind( _1,  _2,  d3,  d4,  d5)
-    tallies = [0]*6
-    tallies[_1-1] += 1
-    tallies[_2-1] += 1
-    tallies[d3-1] += 1
-    tallies[d4-1] += 1
-    tallies[d5-1] += 1
-    for i in (0..6)
-      if (tallies[i] >= 4)
-        return (i+1) * 4
-      end
+  def self.four_of_a_kind( dice: )
+    dice_face_values_count = build_dice_face_values_set(dice)
+
+    remaining_dice = dice_face_values_count.reject { |_k, v| v < 4 }
+
+    if remaining_dice.size > 0
+      remaining_dice.keys.max * 4
+    else
+      0
     end
-    return 0
   end
 
   def self.smallStraight( d1,  d2,  d3,  d4,  d5)
