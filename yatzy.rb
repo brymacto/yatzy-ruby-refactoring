@@ -24,33 +24,36 @@ class Yatzy
 
   def self.singles( number: , dice: )
     raise "you can only use 6-sided dice (number must be between 1 and 6)" if (number < 1) || (number > 6)
-    
-    dice_face_values_count = build_dice_face_values_set(dice).reject { |k, _v| k != number }
-    dice_face_values_count.size == 1 ? dice_face_values_count.keys.max * dice_face_values_count.values.max : 0
+
+    dice_face_values_count = build_dice_face_values_set(dice).select { |k, _v| k == number }
+    return 0 if dice_face_values_count.empty?
+    dice_face_values_count.flatten.reduce(&:*)
   end
 
   def self.one_pair( dice: )
-    dice_face_values_count = build_dice_face_values_set(dice).reject { |_k, v| v != 2 }
-    dice_face_values_count.size > 0 ? dice_face_values_count.keys.max * 2 : 0
+    dice_face_values_count = build_dice_face_values_set(dice).select { |_k, v| v == 2 }
+    dice_face_values_count.max_by {|k, v| k}.reduce(&:*)
   end
 
   def self.two_pair( dice: )
-    dice_face_values_count = build_dice_face_values_set(dice).reject { |_k, v| v != 2 }
-    dice_face_values_count.keys.size == 2 ? dice_face_values_count.keys.reduce(&:+) * 2 : 0
+    dice_face_values_count = build_dice_face_values_set(dice).select { |_k, v| v == 2 }
+
+    return 0 if dice_face_values_count.size < 2
+    dice_face_values_count.map{|k, v| k * v}.reduce(&:+)
   end
 
   def self.three_of_a_kind( dice: )
-    dice_face_values_count = build_dice_face_values_set(dice).reject { |_k, v| v != 3 }
-    dice_face_values_count.size > 0 ? dice_face_values_count.keys.max * 3 : 0
+    dice_face_values_count = build_dice_face_values_set(dice).select { |_k, v| v == 3 }
+    dice_face_values_count.map{|k, v| k * v}.reduce(&:*)
   end
 
   def self.four_of_a_kind( dice: )
-    dice_face_values_count = build_dice_face_values_set(dice).reject { |_k, v| v != 4 }
-    dice_face_values_count.size > 0 ? dice_face_values_count.keys.max * 4 : 0
+    dice_face_values_count = build_dice_face_values_set(dice).select { |_k, v| v == 4 }
+    dice_face_values_count.max_by {|k, v| k}.reduce(&:*)
   end
 
   def self.yatzy( dice: )
-    dice_face_values_count = build_dice_face_values_set(dice).reject { |_k, v| v != 5 }
+    dice_face_values_count = build_dice_face_values_set(dice).select { |_k, v| v == 5 }
     dice_face_values_count.size == 1 ? YATZY_SCORE : 0
   end
 
