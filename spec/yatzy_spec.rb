@@ -73,9 +73,11 @@ RSpec.describe Yatzy do
   end
 
   it "test_smallStraight()" do
-    expect(15).to eq(Yatzy.smallStraight(1, 2, 3, 4, 5))
-    expect(15).to eq(Yatzy.smallStraight(2, 3, 4, 5, 1))
-    expect(0).to eq(Yatzy.smallStraight(1, 2, 2, 4, 5))
+    aggregate_failures do
+      expect( Yatzy.smallStraight(dice: [1, 2, 3, 4, 5]) ).to eq(15)
+      expect( Yatzy.smallStraight(dice: [2, 3, 4, 5, 1]) ).to eq(15)
+      expect( Yatzy.smallStraight(dice: [1, 2, 2, 4, 5]) ).to eq(0)
+    end
   end
 
   it "test_largeStraight" do
