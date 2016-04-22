@@ -24,11 +24,9 @@ class Yatzy
 
   def self.singles( number: , dice: )
     raise "you can only use 6-sided dice (number must be between 1 and 6)" if (number < 1) || (number > 6)
-    return 0 unless dice.include?(number)
-    dice.reject { |die| die != number }.reduce(&:+)
-
+    
     dice_face_values_count = build_dice_face_values_set(dice).reject { |k, _v| k != number }
-    dice_face_values_count.size == 1 ? dice_face_values_count.key * dice_face_values_count.value : 0
+    dice_face_values_count.size == 1 ? dice_face_values_count.keys.max * dice_face_values_count.values.max : 0
   end
 
   def self.one_pair( dice: )
