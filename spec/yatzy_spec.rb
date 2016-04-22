@@ -55,15 +55,19 @@ RSpec.describe Yatzy do
   end
 
   it "test_one_pair" do
-    expect(Yatzy.one_pair(dice: [3, 4, 3, 5, 6])).to eq(6)
-    expect(Yatzy.one_pair(dice: [5, 3, 3, 3, 5])).to eq(10)
-    expect(Yatzy.one_pair(dice: [5, 3, 6, 6, 5])).to eq(12)
+    aggregate_failres do
+      expect(Yatzy.one_pair(dice: [3, 4, 3, 5, 6])).to eq(6)
+      expect(Yatzy.one_pair(dice: [5, 3, 3, 3, 5])).to eq(10)
+      expect(Yatzy.one_pair(dice: [5, 3, 6, 6, 5])).to eq(12)
+    end
   end
 
   it "test_two_Pair" do
-    expect(Yatzy.two_pair(dice: [3, 3, 5, 4, 5])).to eq(16)
-    expect(Yatzy.two_pair(dice: [1, 1, 2, 2, 5])).to eq(6)
-    expect(Yatzy.two_pair(dice: [1, 1, 3, 4, 5])).to eq(0)
+    aggregate_failures do
+      expect(Yatzy.two_pair(dice: [3, 3, 5, 4, 5])).to eq(16)
+      expect(Yatzy.two_pair(dice: [1, 1, 2, 2, 5])).to eq(6)
+      expect(Yatzy.two_pair(dice: [1, 1, 3, 4, 5])).to eq(0)
+    end
   end
 
   it "test_three_of_a_kind" do
