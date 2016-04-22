@@ -72,27 +72,27 @@ RSpec.describe Yatzy do
     end
   end
 
-  it "test_smallStraight()" do
+  it "test_small_straight()" do
     aggregate_failures do
-      expect( Yatzy.smallStraight(dice: [1, 2, 3, 4, 5]) ).to eq(15)
-      expect( Yatzy.smallStraight(dice: [2, 3, 4, 5, 1]) ).to eq(15)
-      expect( Yatzy.smallStraight(dice: [1, 2, 2, 4, 5]) ).to eq(0)
+      expect( Yatzy.small_straight(dice: [1, 2, 3, 4, 5]) ).to eq(15)
+      expect( Yatzy.small_straight(dice: [2, 3, 4, 5, 1]) ).to eq(15)
+      expect( Yatzy.small_straight(dice: [1, 2, 2, 4, 5]) ).to eq(0)
     end
   end
 
-  it "test_largeStraight" do
+  it "test_large_straight" do
     aggregate_failures do
-      expect( Yatzy.largeStraight(dice: [6, 2, 3, 4, 5]) ).to eq(20)
-      expect( Yatzy.largeStraight(dice: [2, 3, 4, 5, 6]) ).to eq(20)
-      expect( Yatzy.largeStraight(dice: [1, 2, 2, 4, 5]) ).to eq(0)
+      expect( Yatzy.large_straight(dice: [6, 2, 3, 4, 5]) ).to eq(20)
+      expect( Yatzy.large_straight(dice: [2, 3, 4, 5, 6]) ).to eq(20)
+      expect( Yatzy.large_straight(dice: [1, 2, 2, 4, 5]) ).to eq(0)
     end
   end
 
-  it "test_fullHouse()" do
+  it "test_full_house()" do
     aggregate_failures do
-      expect( Yatzy.fullHouse(dice: [6, 2, 2, 2, 6]) ).to eq(18)
-      expect( Yatzy.fullHouse(dice: [6, 6, 2, 2, 6]) ).to eq(22)
-      expect( Yatzy.fullHouse(dice: [2, 3, 4, 5, 6]) ).to eq(0)
+      expect( Yatzy.full_house(dice: [6, 2, 2, 2, 6]) ).to eq(18)
+      expect( Yatzy.full_house(dice: [6, 6, 2, 2, 6]) ).to eq(22)
+      expect( Yatzy.full_house(dice: [2, 3, 4, 5, 6]) ).to eq(0)
     end
   end
 

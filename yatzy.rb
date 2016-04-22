@@ -80,17 +80,17 @@ class Yatzy
     end
   end
 
-  def self.smallStraight( dice: )
+  def self.small_straight( dice: )
     return 15 if dice.reduce(&:+) == 15
     0
   end
 
-  def self.largeStraight( dice: )
+  def self.large_straight( dice: )
     return 20 if dice.reduce(&:+) == 20
     0
   end
 
-  def self.fullHouse( dice: )
+  def self.full_house( dice: )
     dice_face_values_count = build_dice_face_values_set(dice)
 
     three_of_a_kind = dice_face_values_count.key(3)
