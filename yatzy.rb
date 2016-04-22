@@ -1,13 +1,4 @@
 class Yatzy
-  def initialize(d1, d2, d3, d4, _5)
-    @dice = [0]*5
-    @dice[0] = d1
-    @dice[1] = d2
-    @dice[2] = d3
-    @dice[3] = d4
-    @dice[4] = _5
-  end
-
   def self.chance(dice: )
     dice.reduce(&:+)
   end
@@ -27,13 +18,9 @@ class Yatzy
   end
 
   def self.build_dice_face_values_set(dice)
-
-    ## this is likely an enumerable of some sort
-    dice_face_values_count = {}
-    dice.uniq.each do |dice_face_value|
-      dice_face_values_count.store( dice_face_value, dice.count(dice_face_value) )
+    dice.uniq.each_with_object({}) do |dice_face_value, memo|
+      memo.store(dice_face_value, dice.count(dice_face_value))
     end
-    dice_face_values_count
   end
 
   def self.score_pair(dice: )
