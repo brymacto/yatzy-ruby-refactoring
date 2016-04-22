@@ -5,9 +5,9 @@ class Yatzy
 
   def self.yatzy(dice: )
     if dice.uniq.size == 1
-      return 50
+      50
     else
-      return 0
+      0
     end
   end
 
@@ -17,13 +17,7 @@ class Yatzy
     dice.select { |die| die == number }.reduce(&:+)
   end
 
-  def self.build_dice_face_values_set(dice)
-    dice.uniq.each_with_object({}) do |dice_face_value, memo|
-      memo.store(dice_face_value, dice.count(dice_face_value))
-    end
-  end
-
-  def self.score_pair(dice: )
+  def self.score_pair( dice: )
     dice_face_values_count = build_dice_face_values_set(dice).reject { |_k, v| v != 2 }
 
     if dice_face_values_count.size != 0
@@ -88,7 +82,14 @@ class Yatzy
     else
       0
     end
+  end
 
+  private
+
+  def self.build_dice_face_values_set( dice )
+    dice.uniq.each_with_object({}) do |dice_face_value, memo|
+      memo.store(dice_face_value, dice.count(dice_face_value))
+    end
   end
 
 end
