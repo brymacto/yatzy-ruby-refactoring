@@ -1,9 +1,9 @@
 class Yatzy
-  def self.chance(dice: )
+  def self.chance( dice: )
     dice.reduce(&:+)
   end
 
-  def self.yatzy(dice: )
+  def self.yatzy( dice: )
     if dice.uniq.size == 1
       50
     else
@@ -11,13 +11,13 @@ class Yatzy
     end
   end
 
-  def self.singles(number: , dice: )
+  def self.singles( number: , dice: )
     raise "you can only use 6-sided dice (number must be between 1 and 6)" if (number < 1) || (number > 6)
     return 0 unless dice.include?(number)
     dice.select { |die| die == number }.reduce(&:+)
   end
 
-  def self.score_pair( dice: )
+  def self.one_pair( dice: )
     dice_face_values_count = build_dice_face_values_set(dice).reject { |_k, v| v != 2 }
 
     if dice_face_values_count.size != 0
