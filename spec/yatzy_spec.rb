@@ -2,6 +2,16 @@ require "spec_helper"
 require_relative "../yatzy"
 
 RSpec.describe Yatzy do
+  describe "#roll" do
+    it "returns a set of 5 dice" do
+      expect(Yatzy.roll.size).to eq(5)
+    end
+
+    it "returns dice that are random" do
+      expect(Yatzy.roll).not_to eq(Yatzy.roll)
+    end
+  end
+
   describe "#chance" do
     it "returns the sum of all dice provided" do
       result = Yatzy.chance(dice: [2, 3, 1, 2, 2])
@@ -10,17 +20,19 @@ RSpec.describe Yatzy do
     end
   end
 
-  describe "#yatzy" do
-    it "scores 50 when all dice are matching" do
-      result = Yatzy.yatzy(dice: [4, 4, 4, 4, 4])
-
-      expect(result).to eq(50)
+  it "test_small_straight" do
+    aggregate_failures do
+      expect( Yatzy.small_straight(dice: [1, 2, 3, 4, 5]) ).to eq(15)
+      expect( Yatzy.small_straight(dice: [2, 3, 4, 5, 1]) ).to eq(15)
+      expect( Yatzy.small_straight(dice: [1, 2, 2, 4, 5]) ).to eq(0)
     end
+  end
 
-    it "scores 0 when all dice are not matching" do
-      result = Yatzy.yatzy(dice: [6, 6, 6, 6, 3])
-
-      expect(result).to eq(0)
+  it "test_large_straight" do
+    aggregate_failures do
+      expect( Yatzy.large_straight(dice: [6, 2, 3, 4, 5]) ).to eq(20)
+      expect( Yatzy.large_straight(dice: [2, 3, 4, 5, 6]) ).to eq(20)
+      expect( Yatzy.large_straight(dice: [1, 2, 2, 4, 5]) ).to eq(0)
     end
   end
 
@@ -68,19 +80,17 @@ RSpec.describe Yatzy do
     end
   end
 
-  it "test_small_straight()" do
-    aggregate_failures do
-      expect( Yatzy.small_straight(dice: [1, 2, 3, 4, 5]) ).to eq(15)
-      expect( Yatzy.small_straight(dice: [2, 3, 4, 5, 1]) ).to eq(15)
-      expect( Yatzy.small_straight(dice: [1, 2, 2, 4, 5]) ).to eq(0)
-    end
-  end
+  describe "#yatzy" do
+    it "scores 50 when all dice are matching" do
+      result = Yatzy.yatzy(dice: [4, 4, 4, 4, 4])
 
-  it "test_large_straight" do
-    aggregate_failures do
-      expect( Yatzy.large_straight(dice: [6, 2, 3, 4, 5]) ).to eq(20)
-      expect( Yatzy.large_straight(dice: [2, 3, 4, 5, 6]) ).to eq(20)
-      expect( Yatzy.large_straight(dice: [1, 2, 2, 4, 5]) ).to eq(0)
+      expect(result).to eq(50)
+    end
+
+    it "scores 0 when all dice are not matching" do
+      result = Yatzy.yatzy(dice: [6, 6, 6, 6, 3])
+
+      expect(result).to eq(0)
     end
   end
 
@@ -89,16 +99,6 @@ RSpec.describe Yatzy do
       expect( Yatzy.full_house(dice: [6, 2, 2, 2, 6]) ).to eq(18)
       expect( Yatzy.full_house(dice: [6, 6, 2, 2, 6]) ).to eq(22)
       expect( Yatzy.full_house(dice: [2, 3, 4, 5, 6]) ).to eq(0)
-    end
-  end
-
-  describe "#roll" do
-    it "returns a set of 5 dice" do
-      expect(Yatzy.roll.size).to eq(5)
-    end
-
-    it "returns dice that are random" do
-      expect(Yatzy.roll).not_to eq(Yatzy.roll)
     end
   end
 end

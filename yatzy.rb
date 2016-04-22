@@ -9,9 +9,12 @@ class Yatzy
     dice.reduce(&:+)
   end
 
-  def self.yatzy( dice: )
-    dice_face_values_count = build_dice_face_values_set(dice).reject { |_k, v| v != 5 }
-    dice_face_values_count.size == 1 ? 50 : 0
+  def self.small_straight( dice: )
+    dice.reduce(&:+) == 15 ? 15 : 0
+  end
+
+  def self.large_straight( dice: )
+    dice.reduce(&:+) == 20 ? 20 : 0
   end
 
   def self.singles( number: , dice: )
@@ -40,12 +43,9 @@ class Yatzy
     dice_face_values_count.size > 0 ? dice_face_values_count.keys.max * 4 : 0
   end
 
-  def self.small_straight( dice: )
-    dice.reduce(&:+) == 15 ? 15 : 0
-  end
-
-  def self.large_straight( dice: )
-    dice.reduce(&:+) == 20 ? 20 : 0
+  def self.yatzy( dice: )
+    dice_face_values_count = build_dice_face_values_set(dice).reject { |_k, v| v != 5 }
+    dice_face_values_count.size == 1 ? 50 : 0
   end
 
   def self.full_house( dice: )
