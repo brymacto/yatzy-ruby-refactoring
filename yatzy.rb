@@ -8,11 +8,11 @@ class Yatzy
     @dice[4] = _5
   end
 
-  def self.chance(*dice)
+  def self.chance(dice: )
     dice.reduce(&:+)
   end
 
-  def self.yatzy(dice)
+  def self.yatzy(dice: )
     if dice.uniq.size == 1
       return 50
     else

@@ -4,7 +4,7 @@ require_relative "../yatzy"
 RSpec.describe Yatzy do
   describe "#chance" do
     it "returns the sum of all dice provided" do
-      result = Yatzy.chance(2, 3, 1, 2, 2)
+      result = Yatzy.chance(dice: [2, 3, 1, 2, 2])
 
       expect(result).to eq(10)
     end
@@ -12,13 +12,13 @@ RSpec.describe Yatzy do
 
   describe "#yatzy" do
     it "scores 50 when all dice are matching" do
-      result = Yatzy.yatzy([4, 4, 4, 4, 4])
+      result = Yatzy.yatzy(dice: [4, 4, 4, 4, 4])
 
       expect(result).to eq(50)
     end
 
     it "scores 0 when all dice are not matching" do
-      result = Yatzy.yatzy([6, 6, 6, 6, 3])
+      result = Yatzy.yatzy(dice: [6, 6, 6, 6, 3])
 
       expect(result).to eq(0)
     end
