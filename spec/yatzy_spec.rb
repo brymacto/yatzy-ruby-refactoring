@@ -16,29 +16,29 @@ RSpec.describe Yatzy do
     it "returns the sum of all dice provided" do
       result = Yatzy.chance(dice: [2, 3, 1, 2, 2])
 
-      expect(result).to eq(10)
+      expect(result).to eq(2 + 3 + 1 + 2 + 2)
     end
   end
 
   it "test_small_straight" do
     aggregate_failures do
-      expect( Yatzy.small_straight(dice: [1, 2, 3, 4, 5]) ).to eq(15)
-      expect( Yatzy.small_straight(dice: [2, 3, 4, 5, 1]) ).to eq(15)
+      expect( Yatzy.small_straight(dice: [1, 2, 3, 4, 5]) ).to eq(Yatzy::SMALL_STRAIGHT_SCORE)
+      expect( Yatzy.small_straight(dice: [2, 3, 4, 5, 1]) ).to eq(Yatzy::SMALL_STRAIGHT_SCORE)
       expect( Yatzy.small_straight(dice: [1, 2, 2, 4, 5]) ).to eq(0)
     end
   end
 
   it "test_large_straight" do
     aggregate_failures do
-      expect( Yatzy.large_straight(dice: [6, 2, 3, 4, 5]) ).to eq(20)
-      expect( Yatzy.large_straight(dice: [2, 3, 4, 5, 6]) ).to eq(20)
+      expect( Yatzy.large_straight(dice: [6, 2, 3, 4, 5]) ).to eq(Yatzy::LARGE_STRAIGHT_SCORE)
+      expect( Yatzy.large_straight(dice: [2, 3, 4, 5, 6]) ).to eq(Yatzy::LARGE_STRAIGHT_SCORE)
       expect( Yatzy.large_straight(dice: [1, 2, 2, 4, 5]) ).to eq(0)
     end
   end
 
   describe "#singles" do
     it "scores the sum of all the number provided" do
-      expect(Yatzy.singles(number: 3, dice: [1, 3, 3, 1, 1])).to eq(6)
+      expect(Yatzy.singles(number: 3, dice: [1, 3, 3, 1, 1])).to eq(3 + 3)
     end
 
     it "scores zero when no dice match the number provided" do
@@ -55,32 +55,32 @@ RSpec.describe Yatzy do
   end
 
   it "test_one_pair" do
-    aggregate_failres do
-      expect(Yatzy.one_pair(dice: [3, 4, 3, 5, 6])).to eq(6)
-      expect(Yatzy.one_pair(dice: [5, 3, 3, 3, 5])).to eq(10)
-      expect(Yatzy.one_pair(dice: [5, 3, 6, 6, 5])).to eq(12)
+    aggregate_failures do
+      expect(Yatzy.one_pair(dice: [3, 4, 3, 5, 6])).to eq(3 + 3)
+      expect(Yatzy.one_pair(dice: [5, 3, 3, 3, 5])).to eq(5 + 5)
+      expect(Yatzy.one_pair(dice: [5, 3, 6, 6, 5])).to eq(6 + 6)
     end
   end
 
   it "test_two_Pair" do
     aggregate_failures do
-      expect(Yatzy.two_pair(dice: [3, 3, 5, 4, 5])).to eq(16)
-      expect(Yatzy.two_pair(dice: [1, 1, 2, 2, 5])).to eq(6)
+      expect(Yatzy.two_pair(dice: [3, 3, 5, 4, 5])).to eq(3 + 3 + 5 + 5)
+      expect(Yatzy.two_pair(dice: [1, 1, 2, 2, 5])).to eq(1 + 1 + 2 + 2)
       expect(Yatzy.two_pair(dice: [1, 1, 3, 4, 5])).to eq(0)
     end
   end
 
   it "test_three_of_a_kind" do
     aggregate_failures do
-      expect(Yatzy.three_of_a_kind(dice: [3, 3, 3, 4, 5])).to eq(9)
-      expect(Yatzy.three_of_a_kind(dice: [1, 1, 1, 3, 5])).to eq(3)
+      expect(Yatzy.three_of_a_kind(dice: [3, 3, 3, 4, 5])).to eq(3 + 3 + 3)
+      expect(Yatzy.three_of_a_kind(dice: [1, 1, 1, 3, 5])).to eq(1 + 1 + 1)
     end
   end
 
   it "test_four_of_a_knd" do
     aggregate_failures do
-      expect(Yatzy.four_of_a_kind(dice: [3, 3, 3, 3, 5])).to eq(12)
-      expect(Yatzy.four_of_a_kind(dice: [5, 5, 5, 4, 5])).to eq(20)
+      expect(Yatzy.four_of_a_kind(dice: [3, 3, 3, 3, 5])).to eq(3 + 3 + 3 + 3)
+      expect(Yatzy.four_of_a_kind(dice: [5, 5, 5, 4, 5])).to eq(5 + 5 + 5 + 5)
     end
   end
 
@@ -88,7 +88,7 @@ RSpec.describe Yatzy do
     it "scores 50 when all dice are matching" do
       result = Yatzy.yatzy(dice: [4, 4, 4, 4, 4])
 
-      expect(result).to eq(50)
+      expect(result).to eq(Yatzy::YATZY_SCORE)
     end
 
     it "scores 0 when all dice are not matching" do
@@ -100,8 +100,8 @@ RSpec.describe Yatzy do
 
   it "test_full_house()" do
     aggregate_failures do
-      expect( Yatzy.full_house(dice: [6, 2, 2, 2, 6]) ).to eq(18)
-      expect( Yatzy.full_house(dice: [6, 6, 2, 2, 6]) ).to eq(22)
+      expect( Yatzy.full_house(dice: [6, 2, 2, 2, 6]) ).to eq(2 + 2 + 2 + 6 + 6)
+      expect( Yatzy.full_house(dice: [6, 6, 2, 2, 6]) ).to eq(6 + 6 + 6 + 2 + 2)
       expect( Yatzy.full_house(dice: [2, 3, 4, 5, 6]) ).to eq(0)
     end
   end

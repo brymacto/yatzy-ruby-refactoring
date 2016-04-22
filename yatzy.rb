@@ -1,4 +1,9 @@
 class Yatzy
+
+  SMALL_STRAIGHT_SCORE = 15
+  LARGE_STRAIGHT_SCORE = 20
+  YATZY_SCORE = 50
+
   def self.roll
     dice = []
     5.times { dice << rand(1..6) }
@@ -10,22 +15,25 @@ class Yatzy
   end
 
   def self.small_straight( dice: )
-    dice.reduce(&:+) == 15 ? 15 : 0
+    dice.reduce(&:+) == SMALL_STRAIGHT_SCORE ? SMALL_STRAIGHT_SCORE : 0
   end
 
   def self.large_straight( dice: )
-    dice.reduce(&:+) == 20 ? 20 : 0
+    dice.reduce(&:+) == LARGE_STRAIGHT_SCORE ? LARGE_STRAIGHT_SCORE : 0
   end
 
   def self.singles( number: , dice: )
     raise "you can only use 6-sided dice (number must be between 1 and 6)" if (number < 1) || (number > 6)
     return 0 unless dice.include?(number)
-    dice.select { |die| die == number }.reduce(&:+)
+    dice.reject { |die| die != number }.reduce(&:+)
+
+    dice_face_values_count = build_dice_face_values_set(dice).reject { |k, _v| k != number }
+    dice_face_values_count.size == 1 ? dice_face_values_count.key * dice_face_values_count.value : 0
   end
 
   def self.one_pair( dice: )
     dice_face_values_count = build_dice_face_values_set(dice).reject { |_k, v| v != 2 }
-    dice_face_values_count.size != 0 ? dice_face_values_count.keys.max * 2 : 0
+    dice_face_values_count.size > 0 ? dice_face_values_count.keys.max * 2 : 0
   end
 
   def self.two_pair( dice: )
@@ -45,7 +53,7 @@ class Yatzy
 
   def self.yatzy( dice: )
     dice_face_values_count = build_dice_face_values_set(dice).reject { |_k, v| v != 5 }
-    dice_face_values_count.size == 1 ? 50 : 0
+    dice_face_values_count.size == 1 ? YATZY_SCORE : 0
   end
 
   def self.full_house( dice: )
