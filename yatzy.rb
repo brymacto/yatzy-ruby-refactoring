@@ -26,7 +26,7 @@ class Yatzy
   end
 
   def self.two_pair( dice: )
-    dice_face_values_count = build_dice_face_values_set(dice).reject { |_k, v| v == 1 }
+    dice_face_values_count = build_dice_face_values_set(dice).reject { |_k, v| v != 2 }
     dice_face_values_count.keys.size == 2 ? dice_face_values_count.keys.reduce(&:+) * 2 : 0
   end
 
@@ -54,11 +54,7 @@ class Yatzy
     three_of_a_kind = dice_face_values_count.key(3)
     pair = dice_face_values_count.key(2)
 
-    if three_of_a_kind && pair
-      dice.reduce(&:+)
-    else
-      0
-    end
+    three_of_a_kind && pair ? dice.reduce(&:+) : 0
   end
 
   private
