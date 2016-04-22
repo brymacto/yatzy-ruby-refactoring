@@ -42,13 +42,25 @@ class Yatzy
   end
 
   def self.filter_single_dice(value_count_pairs)
-    value_count_pairs.reject { |_k, value| value == 1 }
+    value_count_pairs.reject { |_k, v| v == 1 }
   end
 
   def self.two_pair( dice: )
     value_count_pairs = build_value_count_pairs(dice)
     if filter_single_dice(value_count_pairs).keys.size == 2
       filter_single_dice(value_count_pairs).keys.reduce(&:+) * 2
+    else
+      0
+    end
+  end
+
+  def self.three_of_a_kind( dice: )
+    value_count_pairs = build_value_count_pairs(dice)
+
+    remaining_dice = value_count_pairs.reject { |_k, v| v < 3 }
+
+    if remaining_dice.size > 0
+      remaining_dice.keys.max * 3
     else
       0
     end
@@ -67,21 +79,6 @@ class Yatzy
       end
     end
     return 0
-  end
-
-  def self.three_of_a_kind( d1,  d2,  d3,  d4,  d5)
-    t = [0]*6
-    t[d1-1] += 1
-    t[d2-1] += 1
-    t[d3-1] += 1
-    t[d4-1] += 1
-    t[d5-1] += 1
-    for i in [0,1,2,3,4,5]
-      if (t[i] >= 3)
-        return (i+1) * 3
-      end
-    end
-    0
   end
 
   def self.smallStraight( d1,  d2,  d3,  d4,  d5)
