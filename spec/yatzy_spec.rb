@@ -65,7 +65,6 @@ RSpec.describe Yatzy do
     aggregate_failures do
       expect(Yatzy.four_of_a_kind(dice: [3, 3, 3, 3, 5])).to eq(12)
       expect(Yatzy.four_of_a_kind(dice: [5, 5, 5, 4, 5])).to eq(20)
-      expect(Yatzy.four_of_a_kind(dice: [3, 3, 3, 3, 3])).to eq(12)
     end
   end
 

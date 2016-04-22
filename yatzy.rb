@@ -36,7 +36,7 @@ class Yatzy
   end
 
   def self.four_of_a_kind( dice: )
-    dice_face_values_count = build_dice_face_values_set(dice).reject { |_k, v| v < 4 }
+    dice_face_values_count = build_dice_face_values_set(dice).reject { |_k, v| v != 4 }
     dice_face_values_count.size > 0 ? dice_face_values_count.keys.max * 4 : 0
   end
 
