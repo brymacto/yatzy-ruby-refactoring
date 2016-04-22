@@ -68,13 +68,11 @@ class Yatzy
   end
 
   def self.small_straight( dice: )
-    return 15 if dice.reduce(&:+) == 15
-    0
+    dice.reduce(&:+) == 15 ? 15 : 0
   end
 
   def self.large_straight( dice: )
-    return 20 if dice.reduce(&:+) == 20
-    0
+    dice.reduce(&:+) == 20 ? 20 : 0
   end
 
   def self.full_house( dice: )
