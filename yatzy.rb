@@ -1,4 +1,10 @@
 class Yatzy
+  def self.roll
+    dice = []
+    5.times { dice << rand(1..6) }
+    dice
+  end
+
   def self.chance( dice: )
     dice.reduce(&:+)
   end

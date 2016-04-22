@@ -96,5 +96,13 @@ RSpec.describe Yatzy do
     end
   end
 
+  describe "#roll" do
+    it "returns a set of 5 dice" do
+      expect(Yatzy.roll.size).to eq(5)
+    end
 
+    it "returns dice that are random" do
+      expect(Yatzy.roll).not_to eq(Yatzy.roll)
+    end
+  end
 end
