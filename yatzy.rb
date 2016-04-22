@@ -26,38 +26,35 @@ class Yatzy
     dice.select { |die| die == number }.reduce(&:+)
   end
 
-  def self.score_pair(dice: )
-    value_count_pairs = build_value_count_pairs(dice)
-    filter_single_dice(value_count_pairs).keys.max * 2
-  end
+  def self.build_dice_face_values_set(dice)
 
-  def self.build_value_count_pairs(dice)
-    unique_dice = dice.uniq
-
-    value_count_pairs = {}
-    unique_dice.each do |dice_face_value|
-      value_count_pairs.store(dice_face_value, dice.count(dice_face_value))
+    ## this is likely an enumerable of some sort
+    dice_face_values_count = {}
+    dice.uniq.each do |dice_face_value|
+      dice_face_values_count.store( dice_face_value, dice.count(dice_face_value) )
     end
-    value_count_pairs
+    dice_face_values_count
   end
 
-  def self.filter_single_dice(value_count_pairs)
-    value_count_pairs.reject { |_k, v| v == 1 }
+  def self.score_pair(dice: )
+    dice_face_values_count = build_dice_face_values_set(dice).reject { |_k, v| v == 1 }
+    dice_face_values_count.keys.max * 2
   end
 
   def self.two_pair( dice: )
-    value_count_pairs = build_value_count_pairs(dice)
-    if filter_single_dice(value_count_pairs).keys.size == 2
-      filter_single_dice(value_count_pairs).keys.reduce(&:+) * 2
+    dice_face_values_count = build_dice_face_values_set(dice).reject { |_k, v| v == 1 }
+
+    if dice_face_values_count.keys.size == 2
+      dice_face_values_count.keys.reduce(&:+) * 2
     else
       0
     end
   end
 
   def self.three_of_a_kind( dice: )
-    value_count_pairs = build_value_count_pairs(dice)
+    dice_face_values_count = build_dice_face_values_set(dice)
 
-    remaining_dice = value_count_pairs.reject { |_k, v| v < 3 }
+    remaining_dice = dice_face_values_count.reject { |_k, v| v < 3 }
 
     if remaining_dice.size > 0
       remaining_dice.keys.max * 3
