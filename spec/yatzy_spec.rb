@@ -89,8 +89,11 @@ RSpec.describe Yatzy do
   end
 
   it "test_fullHouse()" do
-    expect(18).to eq(Yatzy.fullHouse(6, 2, 2, 2, 6))
-    expect(0).to eq(Yatzy.fullHouse(2, 3, 4, 5, 6))
+    aggregate_failures do
+      expect( Yatzy.fullHouse(dice: [6, 2, 2, 2, 6]) ).to eq(18)
+      expect( Yatzy.fullHouse(dice: [6, 6, 2, 2, 6]) ).to eq(22)
+      expect( Yatzy.fullHouse(dice: [2, 3, 4, 5, 6]) ).to eq(0)
+    end
   end
 
 

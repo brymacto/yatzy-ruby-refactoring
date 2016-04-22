@@ -37,8 +37,13 @@ class Yatzy
   end
 
   def self.score_pair(dice: )
-    dice_face_values_count = build_dice_face_values_set(dice).reject { |_k, v| v == 1 }
-    dice_face_values_count.keys.max * 2
+    dice_face_values_count = build_dice_face_values_set(dice).reject { |_k, v| v != 2 }
+
+    if dice_face_values_count.size != 0
+      dice_face_values_count.keys.max * 2
+    else
+      0
+    end
   end
 
   def self.two_pair( dice: )
@@ -85,39 +90,18 @@ class Yatzy
     0
   end
 
-  def self.fullHouse( d1,  d2,  d3,  d4,  d5)
-    tallies = []
-    _2 = false
-    i = 0
-    _2_at = 0
-    _3 = false
-    _3_at = 0
+  def self.fullHouse( dice: )
+    dice_face_values_count = build_dice_face_values_set(dice)
 
-    tallies = [0]*6
-    tallies[d1-1] += 1
-    tallies[d2-1] += 1
-    tallies[d3-1] += 1
-    tallies[d4-1] += 1
-    tallies[d5-1] += 1
+    three_of_a_kind = dice_face_values_count.key(3)
+    pair = dice_face_values_count.key(2)
 
-    for i in Array 0..5
-      if (tallies[i] == 2)
-        _2 = true
-        _2_at = i+1
-      end
-    end
-
-    for i in Array 0..5
-      if (tallies[i] == 3)
-        _3 = true
-        _3_at = i+1
-      end
-    end
-
-    if (_2 and _3)
-      return _2_at * 2 + _3_at * 3
+    if three_of_a_kind && pair
+      dice.reduce(&:+)
     else
-      return 0
+      0
     end
+
   end
+
 end
