@@ -10,22 +10,7 @@ class Yatzy
     @dice = dice
     @dice_face_values_set = build_dice_face_values_set
     @sum_of_dice = calculate_sum_of_dice
-    @scores = scores
-  end
-
-  def scores
-    @scores ||= {
-      "chance": nil,
-      "small straight": nil,
-      "large straight": nil,
-      "singles": nil,
-      "one pair": nil,
-      "two pair": nil,
-      "three of a kind": nil,
-      "four of a kind": nil,
-      "yatzy": nil,
-      "full house": nil
-    }
+    @scores = calculate_scores
   end
 
   def self.roll
@@ -34,86 +19,11 @@ class Yatzy
     dice
   end
 
-  def self.chance( dice: )
-    dice.reduce(&:+)
-  end
-
-  def self.small_straight( dice: )
-    dice.reduce(&:+) == SMALL_STRAIGHT_SCORE ? SMALL_STRAIGHT_SCORE : 0
-  end
-
-  def self.large_straight( dice: )
-    dice.reduce(&:+) == LARGE_STRAIGHT_SCORE ? LARGE_STRAIGHT_SCORE : 0
-  end
-
   def self.singles( number: , dice: )
     raise "you can only use 6-sided dice (number must be between 1 and 6)" if (number < 1) || (number > 6)
 
     dice_face_values_count = build_dice_face_values_set(dice).select { |k, _v| k == number }
     score_singles(dice_face_values_count)
-  end
-
-  def self.score_singles(dice_face_values_count)
-    return 0 if dice_face_values_count.empty?
-    dice_face_values_count.flatten.reduce(&:*)
-  end
-
-  def self.one_pair( dice: )
-    dice_face_values_count = build_dice_face_values_set(dice).select { |_k, v| v == 2 }
-    score_one_pair(dice_face_values_count)
-  end
-
-  def self.score_one_pair(dice_face_values_count)
-    dice_face_values_count.max_by { |k, v| k }.reduce(&:*)
-  end
-
-  def self.two_pair( dice: )
-    dice_face_values_count = build_dice_face_values_set(dice).select { |_k, v| v == 2 }
-    score_two_pair(dice_face_values_count)
-  end
-
-  def self.score_two_pair(dice_face_values_count)
-    return 0 if dice_face_values_count.size < 2
-    dice_face_values_count.map { |k, v| k * v }.reduce(&:+)
-  end
-
-  def self.three_of_a_kind( dice: )
-    dice_face_values_count = build_dice_face_values_set(dice).select { |_k, v| v == 3 }
-    score_three_of_a_kind(dice_face_values_count)
-  end
-
-  def self.score_three_of_a_kind(dice_face_values_count)
-    dice_face_values_count.map { |k, v| k * v }.reduce(&:*)
-  end
-
-  def self.four_of_a_kind( dice: )
-    dice_face_values_count = build_dice_face_values_set(dice).select { |_k, v| v == 4 }
-    score_four_of_a_kind(dice_face_values_count)
-  end
-
-  def self.score_four_of_a_kind(dice_face_values_count)
-    dice_face_values_count.max_by { |k, v| k }.reduce(&:*)
-  end
-
-  def self.yatzy( dice: )
-    dice_face_values_count = build_dice_face_values_set(dice).select { |_k, v| v == 5 }
-    score_yatzy(dice_face_values_count)
-  end
-
-  def self.score_yatzy(dice_face_values_count)
-    dice_face_values_count.size == 1 ? YATZY_SCORE : 0
-  end
-
-  def self.full_house( dice: )
-    dice_face_values_count = build_dice_face_values_set(dice)
-    three_of_a_kind = dice_face_values_count.key(3)
-    pair = dice_face_values_count.key(2)
-
-    three_of_a_kind && pair ? score_full_house(dice) : 0
-  end
-
-  def self.score_full_house(dice)
-    dice.reduce(&:+)
   end
 
   private
@@ -134,7 +44,95 @@ class Yatzy
     @sum_of_dice = @dice.reduce(&:+)
   end
 
-  def chance
+  def calculate_scores
+    @scores ||= {
+      "chance" => find_chance,
+      "small straight" => find_small_straight,
+      "large straight" => find_large_straight,
+      "singles" => find_singles,
+      "one pair" => find_one_pair,
+      "two pair" => find_two_pair,
+      "three of a kind" => find_three_of_a_kind,
+      "four of a kind" => find_four_of_a_kind,
+      "yatzy" => find_yatzy,
+      "full house" => find_full_house
+    }
+  end
+
+  def find_chance
+    @sum_of_dice
+  end
+
+  def find_small_straight
+    @sum_of_dice == SMALL_STRAIGHT_SCORE ? SMALL_STRAIGHT_SCORE : 0
+  end
+
+  def find_large_straight
+    @sum_of_dice == LARGE_STRAIGHT_SCORE ? LARGE_STRAIGHT_SCORE : 0
+  end
+
+  def find_singles
+    dice_face_values_count = @dice_face_values_set
+    score_singles(dice_face_values_count)
+  end
+
+  def score_singles(dice_face_values_count)
+    dice_face_values_count.max_by { |k, v| k * v }.reduce(&:*)
+  end
+
+  def find_one_pair
+    dice_face_values_count = @dice_face_values_set.select { |_k, v| v == 2 }
+    score_one_pair(dice_face_values_count)
+  end
+
+  def score_one_pair(dice_face_values_count)
+    return 0 if dice_face_values_count.empty?
+    dice_face_values_count.max_by { |k, v| k * v }.reduce(&:*)
+  end
+
+  def find_two_pair
+    dice_face_values_count = @dice_face_values_set.select { |_k, v| v == 2 }
+    score_two_pair(dice_face_values_count)
+  end
+
+  def score_two_pair(dice_face_values_count)
+    return 0 if dice_face_values_count.size != 2
+    dice_face_values_count.map { |k, v| k * v }.reduce(&:+)
+  end
+
+  def find_three_of_a_kind
+    dice_face_values_count = @dice_face_values_set.select { |_k, v| v == 3 }
+    score_three_of_a_kind(dice_face_values_count)
+  end
+
+  def score_three_of_a_kind(dice_face_values_count)
+    return 0 if dice_face_values_count.empty?
+    dice_face_values_count.map { |k, v| k * v }.reduce(&:*)
+  end
+
+  def find_four_of_a_kind
+    dice_face_values_count = @dice_face_values_set.select { |_k, v| v == 4 }
+    score_four_of_a_kind(dice_face_values_count)
+  end
+
+  def score_four_of_a_kind(dice_face_values_count)
+    return 0 if dice_face_values_count.empty?
+    dice_face_values_count.max_by { |k, v| k }.reduce(&:*)
+  end
+
+  def find_yatzy
+    @dice_face_values_set.size == 1 ? YATZY_SCORE : 0
+  end
+
+  def find_full_house
+    dice_face_values_count = @dice_face_values_set
+    three_of_a_kind = dice_face_values_count.key(3)
+    pair = dice_face_values_count.key(2)
+
+    three_of_a_kind && pair ? score_full_house : 0
+  end
+
+  def score_full_house
     @sum_of_dice
   end
 end
