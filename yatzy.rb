@@ -14,7 +14,16 @@ class Yatzy
 
   def scores
     @scores ||= {
-
+      "chance": nil,
+      "small straight": nil,
+      "large straight": nil,
+      "singles": nil,
+      "one pair": nil,
+      "two pair": nil,
+      "three of a kind": nil,
+      "four of a kind": nil,
+      "yatzy": nil,
+      "full house": nil
     }
   end
 

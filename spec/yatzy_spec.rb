@@ -116,6 +116,16 @@ RSpec.describe Yatzy do
 
     it "@scores" do
       expect(game.scores).to be_a(Hash)
+      expect(game.scores).to include("chance".to_sym)
+      expect(game.scores).to include("small straight".to_sym)
+      expect(game.scores).to include("large straight".to_sym)
+      expect(game.scores).to include("singles".to_sym)
+      expect(game.scores).to include("one pair".to_sym)
+      expect(game.scores).to include("two pair".to_sym)
+      expect(game.scores).to include("three of a kind".to_sym)
+      expect(game.scores).to include("four of a kind".to_sym)
+      expect(game.scores).to include("yatzy".to_sym)
+      expect(game.scores).to include("full house".to_sym)
     end
   end
 end
