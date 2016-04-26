@@ -26,44 +26,70 @@ class Yatzy
     raise "you can only use 6-sided dice (number must be between 1 and 6)" if (number < 1) || (number > 6)
 
     dice_face_values_count = build_dice_face_values_set(dice).select { |k, _v| k == number }
+    score_singles(dice_face_values_count)
+  end
+
+  def self.score_singles(dice_face_values_count)
     return 0 if dice_face_values_count.empty?
     dice_face_values_count.flatten.reduce(&:*)
   end
 
   def self.one_pair( dice: )
     dice_face_values_count = build_dice_face_values_set(dice).select { |_k, v| v == 2 }
-    dice_face_values_count.max_by {|k, v| k}.reduce(&:*)
+    score_one_pair(dice_face_values_count)
+  end
+
+  def self.score_one_pair(dice_face_values_count)
+    dice_face_values_count.max_by { |k, v| k }.reduce(&:*)
   end
 
   def self.two_pair( dice: )
     dice_face_values_count = build_dice_face_values_set(dice).select { |_k, v| v == 2 }
+    score_two_pair(dice_face_values_count)
+  end
 
+  def self.score_two_pair(dice_face_values_count)
     return 0 if dice_face_values_count.size < 2
-    dice_face_values_count.map{|k, v| k * v}.reduce(&:+)
+    dice_face_values_count.map { |k, v| k * v }.reduce(&:+)
   end
 
   def self.three_of_a_kind( dice: )
     dice_face_values_count = build_dice_face_values_set(dice).select { |_k, v| v == 3 }
-    dice_face_values_count.map{|k, v| k * v}.reduce(&:*)
+    score_three_of_a_kind(dice_face_values_count)
+  end
+
+  def self.score_three_of_a_kind(dice_face_values_count)
+    dice_face_values_count.map { |k, v| k * v }.reduce(&:*)
   end
 
   def self.four_of_a_kind( dice: )
     dice_face_values_count = build_dice_face_values_set(dice).select { |_k, v| v == 4 }
-    dice_face_values_count.max_by {|k, v| k}.reduce(&:*)
+    score_four_of_a_kind(dice_face_values_count)
+  end
+
+  def self.score_four_of_a_kind(dice_face_values_count)
+    dice_face_values_count.max_by { |k, v| k }.reduce(&:*)
   end
 
   def self.yatzy( dice: )
     dice_face_values_count = build_dice_face_values_set(dice).select { |_k, v| v == 5 }
+    score_yatzy(dice_face_values_count)
+  end
+
+  def self.score_yatzy(dice_face_values_count)
     dice_face_values_count.size == 1 ? YATZY_SCORE : 0
   end
 
   def self.full_house( dice: )
     dice_face_values_count = build_dice_face_values_set(dice)
-
     three_of_a_kind = dice_face_values_count.key(3)
     pair = dice_face_values_count.key(2)
 
-    three_of_a_kind && pair ? dice.reduce(&:+) : 0
+    three_of_a_kind && pair ? score_full_house(dice) : 0
+  end
+
+  def self.score_full_house(dice)
+    dice.reduce(&:+)
   end
 
   private
