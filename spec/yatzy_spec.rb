@@ -105,4 +105,17 @@ RSpec.describe Yatzy do
       expect( Yatzy.full_house(dice: [2, 3, 4, 5, 6]) ).to eq(0)
     end
   end
+
+  describe "Object" do
+    dice_roll = [1, 1, 1, 1, 1]
+    let(:game) { Yatzy.new(dice: dice_roll) }
+
+    it "has attributes" do
+      expect(game).to have_attributes(dice: [1, 1, 1, 1, 1], dice_face_values_set: {1 => 5})
+    end
+
+    it "@scores" do
+      expect(game.scores).to be_a(Hash)
+    end
+  end
 end

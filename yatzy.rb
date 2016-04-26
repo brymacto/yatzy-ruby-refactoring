@@ -4,6 +4,20 @@ class Yatzy
   LARGE_STRAIGHT_SCORE = 20
   YATZY_SCORE = 50
 
+  attr_reader :dice, :dice_face_values_set, :scores
+
+  def initialize(dice: roll)
+    @dice = dice
+    @dice_face_values_set = build_dice_face_values_set
+    @scores = scores
+  end
+
+  def scores
+    @scores ||= {
+
+    }
+  end
+
   def self.roll
     dice = []
     5.times { dice << rand(1..6) }
@@ -97,6 +111,12 @@ class Yatzy
   def self.build_dice_face_values_set( dice )
     dice.uniq.each_with_object({}) do |dice_face_value, memo|
       memo.store(dice_face_value, dice.count(dice_face_value))
+    end
+  end
+
+  def build_dice_face_values_set
+    @dice.uniq.each_with_object({}) do |dice_face_value, memo|
+      memo.store(dice_face_value, @dice.count(dice_face_value))
     end
   end
 
