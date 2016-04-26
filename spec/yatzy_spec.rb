@@ -111,7 +111,11 @@ RSpec.describe Yatzy do
     let(:game) { Yatzy.new(dice: dice_roll) }
 
     it "has attributes" do
-      expect(game).to have_attributes(dice: [1, 1, 1, 1, 1], dice_face_values_set: {1 => 5})
+      expect(game).to have_attributes(
+                          dice: [1, 1, 1, 1, 1],
+                          dice_face_values_set: {1 => 5},
+                          sum_of_dice: 5,
+                      )
     end
 
     it "@scores" do
@@ -127,5 +131,6 @@ RSpec.describe Yatzy do
       expect(game.scores).to include("yatzy".to_sym)
       expect(game.scores).to include("full house".to_sym)
     end
+
   end
 end

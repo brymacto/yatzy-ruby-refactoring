@@ -4,11 +4,12 @@ class Yatzy
   LARGE_STRAIGHT_SCORE = 20
   YATZY_SCORE = 50
 
-  attr_reader :dice, :dice_face_values_set, :scores
+  attr_reader :dice, :dice_face_values_set, :scores, :sum_of_dice
 
   def initialize(dice: roll)
     @dice = dice
     @dice_face_values_set = build_dice_face_values_set
+    @sum_of_dice = calculate_sum_of_dice
     @scores = scores
   end
 
@@ -129,4 +130,11 @@ class Yatzy
     end
   end
 
+  def calculate_sum_of_dice
+    @sum_of_dice = @dice.reduce(&:+)
+  end
+
+  def chance
+    @sum_of_dice
+  end
 end
