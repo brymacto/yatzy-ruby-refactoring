@@ -47,6 +47,8 @@ class Yatzy
       "full house" => find_full_house,
       "singles" => find_singles,
       # "chance" => find_chance,
+      # RMTODO (2016-04-26): bring chance back!  doesn't work right now because it's almost always the highest score.
+      #  it only really works with multiple rolls which isn't implemented yet
     }
   end
 
