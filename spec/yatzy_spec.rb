@@ -12,6 +12,20 @@ RSpec.describe Yatzy do
     end
   end
 
+  describe "#best_option" do
+    it "returns an array of the highest scoring set of dice" do
+      yatzy = Yatzy.new(dice: [1, 1, 1, 1, 1]).best_option
+      small_straight = Yatzy.new(dice: [1, 2, 3, 4, 5]).best_option
+      large_straight = Yatzy.new(dice: [2, 3, 4, 5, 6]).best_option
+      four_kind = Yatzy.new(dice: [4, 4, 4, 4, 1]).best_option
+
+      expect(yatzy).to eq(["yatzy", Yatzy::YATZY_SCORE])
+      expect(small_straight).to eq(["small straight", Yatzy::SMALL_STRAIGHT_SCORE])
+      expect(large_straight).to eq(["large straight", Yatzy::LARGE_STRAIGHT_SCORE])
+      expect(four_kind).to eq(["four of a kind", 4 * 4])
+    end
+  end
+
   describe "Object" do
     dice_roll = [1, 1, 1, 1, 1]
     let(:game) { Yatzy.new(dice: dice_roll) }
@@ -28,7 +42,7 @@ RSpec.describe Yatzy do
     describe "@scores attribute" do
       it "is a hash with keys" do
         expect(scores).to be_a(Hash)
-        expect(scores).to include("chance")
+        # expect(scores).to include("chance")
         expect(scores).to include("small straight")
         expect(scores).to include("large straight")
         expect(scores).to include("singles")
@@ -40,40 +54,58 @@ RSpec.describe Yatzy do
         expect(scores).to include("full house")
       end
 
-      it "sums all values for chance" do
-        result = Yatzy.new(dice: [2, 3, 1, 2, 2]).scores.fetch("chance")
+      describe "@score.fetch('chance')" do
+        xit "returns the sum of all values for chance" do
+          result = Yatzy.new(dice: [2, 3, 1, 2, 2]).scores.fetch("chance")
 
-        expect(result).to eq(2 + 3 + 1 + 2 + 2)
-        expect(scores.fetch("chance")).to eq(game.sum_of_dice)
+          expect(result).to eq(2 + 3 + 1 + 2 + 2)
+          expect(scores.fetch("chance")).to eq(game.sum_of_dice)
+        end
       end
 
-      it "finds the sum for a small straight" do
-        result = Yatzy.new(dice: [1, 2, 3, 4, 5]).scores.fetch("small straight")
-        result2 = Yatzy.new(dice: [2, 3, 4, 5, 1]).scores.fetch("small straight")
-        result3 = Yatzy.new(dice: [1, 2, 2, 4, 5]).scores.fetch("small straight")
+      describe "@score.fetch('small straight')" do
+        it "returns the sum for a small straight" do
+          result = Yatzy.new(dice: [1, 2, 3, 4, 5]).scores.fetch("small straight")
+          result2 = Yatzy.new(dice: [2, 3, 4, 5, 1]).scores.fetch("small straight")
 
-        expect(result).to eq(Yatzy::SMALL_STRAIGHT_SCORE)
-        expect(result2).to eq(Yatzy::SMALL_STRAIGHT_SCORE)
-        expect(result3).to eq(0)
-        expect(scores.fetch("small straight")).to eq(0)
+
+          expect(result).to eq(Yatzy::SMALL_STRAIGHT_SCORE)
+          expect(result2).to eq(Yatzy::SMALL_STRAIGHT_SCORE)
+        end
+
+        it "returns 0 when there is no small straight" do
+          result3 = Yatzy.new(dice: [1, 2, 2, 4, 5]).scores.fetch("small straight")
+
+          expect(result3).to eq(0)
+          expect(scores.fetch("small straight")).to eq(0)
+        end
       end
 
-      it "finds the sum for a large straight" do
-        result = Yatzy.new(dice: [6, 2, 3, 4, 5]).scores.fetch("large straight")
-        result2 = Yatzy.new(dice: [2, 3, 4, 5, 6]).scores.fetch("large straight")
-        result3 = Yatzy.new(dice: [1, 2, 2, 4, 5]).scores.fetch("large straight")
+      describe "@score.fetch('large straight')" do
+        it "finds the sum for a large straight" do
+          result = Yatzy.new(dice: [6, 2, 3, 4, 5]).scores.fetch("large straight")
+          result2 = Yatzy.new(dice: [2, 3, 4, 5, 6]).scores.fetch("large straight")
 
-        expect(result).to eq(Yatzy::LARGE_STRAIGHT_SCORE)
-        expect(result2).to eq(Yatzy::LARGE_STRAIGHT_SCORE)
-        expect(result3).to eq(0)
-        expect(scores.fetch("large straight")).to eq(0)
+
+          expect(result).to eq(Yatzy::LARGE_STRAIGHT_SCORE)
+          expect(result2).to eq(Yatzy::LARGE_STRAIGHT_SCORE)
+        end
+
+        it "returns 0 if there is no large straight" do
+          result3 = Yatzy.new(dice: [1, 2, 2, 4, 5]).scores.fetch("large straight")
+
+          expect(result3).to eq(0)
+          expect(scores.fetch("large straight")).to eq(0)
+        end
       end
 
       describe "@scores.fetch('singles')" do
         it "returns the sum of the highest combination for each number in the roll" do
           result = Yatzy.new(dice: [1, 3, 3, 1, 1]).scores.fetch("singles")
+          result2 = Yatzy.new(dice: [6, 1, 1, 1, 1]).scores.fetch("singles")
 
           expect(result).to eq(3 + 3)
+          expect(result2).to eq(6)
           expect(scores.fetch("singles")).to eq(1 + 1 + 1 + 1 + 1)
         end
       end
@@ -90,9 +122,9 @@ RSpec.describe Yatzy do
         end
 
         it "returns 0 if a pair cannot be made" do
-          result = Yatzy.new(dice: [1, 2, 3, 5, 6]).scores.fetch("one pair")
+          result4 = Yatzy.new(dice: [1, 2, 3, 5, 6]).scores.fetch("one pair")
 
-          expect(result).to eq(0)
+          expect(result4).to eq(0)
         end
       end
 

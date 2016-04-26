@@ -19,20 +19,11 @@ class Yatzy
     dice
   end
 
-  def self.singles( number: , dice: )
-    raise "you can only use 6-sided dice (number must be between 1 and 6)" if (number < 1) || (number > 6)
-
-    dice_face_values_count = build_dice_face_values_set(dice).select { |k, _v| k == number }
-    score_singles(dice_face_values_count)
+  def best_option
+    @scores.max_by { |_k, v| v }
   end
 
   private
-
-  def self.build_dice_face_values_set( dice )
-    dice.uniq.each_with_object({}) do |dice_face_value, memo|
-      memo.store(dice_face_value, dice.count(dice_face_value))
-    end
-  end
 
   def build_dice_face_values_set
     @dice.uniq.each_with_object({}) do |dice_face_value, memo|
@@ -45,17 +36,17 @@ class Yatzy
   end
 
   def calculate_scores
-    @scores ||= {
-      "chance" => find_chance,
+    @scores = {
       "small straight" => find_small_straight,
       "large straight" => find_large_straight,
-      "singles" => find_singles,
       "one pair" => find_one_pair,
       "two pair" => find_two_pair,
       "three of a kind" => find_three_of_a_kind,
       "four of a kind" => find_four_of_a_kind,
       "yatzy" => find_yatzy,
-      "full house" => find_full_house
+      "full house" => find_full_house,
+      "singles" => find_singles,
+      # "chance" => find_chance,
     }
   end
 
