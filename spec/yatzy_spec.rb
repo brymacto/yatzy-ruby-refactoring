@@ -26,7 +26,7 @@ RSpec.describe Yatzy do
       large_straight = Yatzy.new(dice: [2, 3, 4, 5, 6]).best_option
       four_kind = Yatzy.new(dice: [4, 4, 4, 4, 1]).best_option
 
-      expect(yatzy).to eq(["Yatzy", Yatzy::YATZY_SCORE])
+      expect(yatzy).to eq(["YatzyScore", Yatzy::YATZY_SCORE])
       expect(small_straight).to eq(["SmallStraight", Yatzy::SMALL_STRAIGHT_SCORE])
       expect(large_straight).to eq(["LargeStraight", Yatzy::LARGE_STRAIGHT_SCORE])
       expect(four_kind).to eq(["FourOfAKind", 4 * 4])
@@ -57,7 +57,7 @@ RSpec.describe Yatzy do
         expect(scores).to include("TwoPair")
         expect(scores).to include("ThreeOfAKind")
         expect(scores).to include("FourOfAKind")
-        expect(scores).to include("Yatzy")
+        expect(scores).to include("YatzyScore")
         expect(scores).to include("FullHouse")
       end
 
@@ -186,15 +186,15 @@ RSpec.describe Yatzy do
         end
       end
 
-      describe "@scores.fetch('yatzy')" do
+      describe "@scores.fetch('YatzyScore')" do
         it "returns 50 when all dice are matching" do
-          result = Yatzy.new(dice: [4, 4, 4, 4, 4]).scores.fetch("Yatzy")
+          result = Yatzy.new(dice: [4, 4, 4, 4, 4]).scores.fetch("YatzyScore")
 
           expect(result).to eq(Yatzy::YATZY_SCORE)
         end
 
         it "returns 0 when all dice are not matching" do
-          result = Yatzy.new(dice: [6, 6, 6, 6, 3]).scores.fetch("Yatzy")
+          result = Yatzy.new(dice: [6, 6, 6, 6, 3]).scores.fetch("YatzyScore")
 
           expect(result).to eq(0)
         end
