@@ -1,5 +1,7 @@
 class Yatzy
 
+  require "score"
+
   SMALL_STRAIGHT_SCORE = 15
   LARGE_STRAIGHT_SCORE = 20
   YATZY_SCORE = 50
@@ -42,7 +44,8 @@ class Yatzy
 
   def calculate_scores
     @scores = {
-      "SmallStraight" => find_small_straight,
+      # "SmallStraight" => find_small_straight,
+      "SmallStraight" => SmallStraight.new(dice: @dice).score,
       "LargeStraight" => find_large_straight,
       "OnePair" => find_one_pair,
       "TwoPair" => find_two_pair,
@@ -59,10 +62,6 @@ class Yatzy
 
   def find_chance
     @sum_of_dice
-  end
-
-  def find_small_straight
-    @sum_of_dice == SMALL_STRAIGHT_SCORE ? SMALL_STRAIGHT_SCORE : 0
   end
 
   def find_large_straight

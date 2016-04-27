@@ -1,5 +1,5 @@
 require "spec_helper"
-require_relative "../yatzy"
+require_relative "../lib/yatzy"
 
 RSpec.describe Yatzy do
   describe "@dice" do
