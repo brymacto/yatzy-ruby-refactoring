@@ -7,7 +7,7 @@ class Yatzy
   attr_reader :dice, :dice_face_values_set, :scores, :sum_of_dice
 
   def initialize(dice: roll)
-    @dice = dice
+    @dice = assign_dice(dice)
     @dice_face_values_set = build_dice_face_values_set
     @sum_of_dice = calculate_sum_of_dice
     @scores = calculate_scores
@@ -25,6 +25,11 @@ class Yatzy
 
   private
 
+  def assign_dice(dice)
+    raise "You need to use five dice" if dice.size != 5
+    @dice = dice
+  end
+
   def build_dice_face_values_set
     @dice.uniq.each_with_object({}) do |dice_face_value, memo|
       memo.store(dice_face_value, @dice.count(dice_face_value))
@@ -41,8 +46,8 @@ class Yatzy
       "large straight" => find_large_straight,
       "one pair" => find_one_pair,
       "two pair" => find_two_pair,
-      "three of a kind" => find_three_of_a_kind,
       "four of a kind" => find_four_of_a_kind,
+      "three of a kind" => find_three_of_a_kind,
       "yatzy" => find_yatzy,
       "full house" => find_full_house,
       "singles" => find_singles,

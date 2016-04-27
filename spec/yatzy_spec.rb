@@ -2,6 +2,13 @@ require "spec_helper"
 require_relative "../yatzy"
 
 RSpec.describe Yatzy do
+  describe "@dice" do
+    it "raises an error if 5 dice are not used" do
+      expect{Yatzy.new(dice: [1,2,3,4,5,6])}.to raise_error("You need to use five dice")
+      expect{Yatzy.new(dice: [1,2,3,4])}.to raise_error("You need to use five dice")
+    end
+  end
+
   describe "#roll" do
     it "returns a set of 5 dice" do
       expect(Yatzy.roll.size).to eq(5)
