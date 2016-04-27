@@ -42,15 +42,15 @@ class Yatzy
 
   def calculate_scores
     @scores = {
-      "small straight" => find_small_straight,
-      "large straight" => find_large_straight,
-      "one pair" => find_one_pair,
-      "two pair" => find_two_pair,
-      "four of a kind" => find_four_of_a_kind,
-      "three of a kind" => find_three_of_a_kind,
-      "yatzy" => find_yatzy,
-      "full house" => find_full_house,
-      "singles" => find_singles,
+      "SmallStraight" => find_small_straight,
+      "LargeStraight" => find_large_straight,
+      "OnePair" => find_one_pair,
+      "TwoPair" => find_two_pair,
+      "FourOfAKind" => find_four_of_a_kind,
+      "ThreeOfAKind" => find_three_of_a_kind,
+      "Yatzy" => find_yatzy,
+      "FullHouse" => find_full_house,
+      "Singles" => find_singles,
       # "chance" => find_chance,
       # RMTODO (2016-04-26): bring chance back!  doesn't work right now because it's almost always the highest score.
       #  it only really works with multiple rolls which isn't implemented yet
